@@ -1,22 +1,32 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Table, TableBody, TableCell, TableHeader, TableHeaderCell, TableRow } from "semantic-ui-react";
+import { fetchExpenses } from "../utils/httpHelper";
 
  function ExpenseTable() {
 
     const [expenses, setExpenses] = useState([]);
+    const [error, setError] = useState();
 
     useEffect(() => {
-        const expensesUrl = 'https://3tvw1ekreg.execute-api.eu-central-1.amazonaws.com/dev/expenses-tracker';
-        async function fetchExpenses() {
-            const response = await fetch(expensesUrl);
-            const responseData = await response.json()
-            console.log('Response: ', responseData);
-            setExpenses(responseData);
+        async function getExpenses() {
+            try {
+                const expensesData = await fetchExpenses();
+                setExpenses(expensesData);
+            } catch (error) {
+                setError({
+                    message: error.message || 'Unable to get Expenses from Lambda, please try again later'
+                });
+            }
         }
 
-        fetchExpenses();
+        getExpenses();
+        
     }, []);
+
+    if (error) {
+        return <Error title="An error occured!" message={error.message}/>
+    }
 
     return (
         <>
