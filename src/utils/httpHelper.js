@@ -21,7 +21,13 @@ export async function fetchExpenses() {
         
     const response = await fetch(expensesUrl);
     const responseData = await response.json();
-
     return responseData;
+}
 
+export async function fetchExpenseStats() {
+    const url = "https://mhws13jdg5.execute-api.eu-central-1.amazonaws.com/dev/expenses-tracker/statistics";
+
+    const response = await fetch(url);
+    const responseJson = await response.json();
+    return responseJson;
 }
