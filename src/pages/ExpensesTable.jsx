@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
-export default function ExpenseTable() {
+ function ExpenseTable() {
 
     const [expenses, setExpenses] = useState([]);
 
@@ -19,6 +20,9 @@ export default function ExpenseTable() {
     return (
         <>
             <p>Expenses should be displayed here as Table!</p>
+            <p><Link to="/addExpense">Add New Expense</Link></p>
         </>
     );
 }
+
+export default ExpenseTable;
